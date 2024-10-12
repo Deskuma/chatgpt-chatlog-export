@@ -2,9 +2,11 @@
 // ChatGPT: Conversation Export Extension
 //
 // Author: <https://github.com/Deskuma>
-// Version: 0.3.0 support chatgpt.com release
+// Version: 0.3.1 Adjusted the position of the download icon button due to the Canvas release.
 
 // Const variable
+const DOMAIN_CHATGPT="chatgpt.com";
+
 const DEBUG = false;
 const gptSession = { data: null };
 if (DEBUG) document.body.style.border = "5px solid red";
@@ -78,7 +80,7 @@ function decryptToken(token, key) {
 
 // Get ThreadId (ChatId)
 // Get and return the conversation ID at the end of the current page URL, otherwise return null
-// URL example: https://chatgpt.com/c/<threadId>
+// URL example: https://${DOMAIN_CHATGPT}/c/<threadId>
 function getThreadId() {
   const url = window.location.href;
   const match = url.match(/c\/([\w-]+)/);
@@ -96,17 +98,17 @@ async function getAccessTokenFireFox() {
   clog(`[debug] gptSession.data: ${gptSession.data == null}`);
   if (gptSession.data == null) {
     const threadId = getThreadId();
-    const response = await fetch("https://chatgpt.com/api/auth/session", {
+    const response = await fetch(`https://${DOMAIN_CHATGPT}/api/auth/session`, {
       credentials: "include",
       headers: {
         "User-Agent": window.navigator.userAgent,
         Accept: "*/*",
         "Accept-Language": navigator.language,
-        "Alt-Used": "chatgpt.com",
+        "Alt-Used": `${DOMAIN_CHATGPT}`,
         Pragma: "no-cache",
         "Cache-Control": "no-cache",
       },
-      referrer: `https://chatgpt.com/c/${threadId}`,
+      referrer: `https://${DOMAIN_CHATGPT}/c/${threadId}`,
       method: "GET",
       mode: "cors",
     });
@@ -134,14 +136,14 @@ async function getAccessTokenGChrome() {
   clog(`[debug] gptSession.data: ${gptSession.data == null}`);
   if (gptSession.data == null) {
     const threadId = getThreadId();
-    const response = await fetch("https://chatgpt.com/api/auth/session", {
+    const response = await fetch(`https://${DOMAIN_CHATGPT}/api/auth/session`, {
       headers: {
         accept: "*/*",
         "accept-language": "ja,en-US;q=0.9,en;q=0.8",
         "cache-control": "no-cache",
         pragma: "no-cache",
       },
-      referrer: `https://chatgpt.com/c/${threadId}`,
+      referrer: `https://${DOMAIN_CHATGPT}/c/${threadId}`,
       referrerPolicy: "same-origin",
       body: null,
       method: "GET",
@@ -209,9 +211,10 @@ iconImage.src = iconURL;
 iconImage.alt = "Download";
 saveButton.appendChild(iconImage);
 
+// Image icon position
 saveButton.style.position = "fixed";
-saveButton.style.bottom = "3.3em";
-saveButton.style.right = "3em";
+saveButton.style.top = "0.8em";
+saveButton.style.right = "15em";
 saveButton.style.zIndex = "9999";
 
 // Insert a save button into your page
@@ -238,7 +241,7 @@ async function getConversationFireFox(threadId) {
   clog(`[debug] threadId: ${threadId}`);
   clog(`[debug] token: ${token != null}`);
   const response = await fetch(
-    `https://chatgpt.com/backend-api/conversation/${threadId}`,
+    `https://${DOMAIN_CHATGPT}/backend-api/conversation/${threadId}`,
     {
       credentials: "include",
       headers: {
@@ -247,11 +250,11 @@ async function getConversationFireFox(threadId) {
         "Accept-Language": navigator.language,
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "Alt-Used": "chatgpt.com",
+        "Alt-Used": `${DOMAIN_CHATGPT}`,
         Pragma: "no-cache",
         "Cache-Control": "no-cache",
       },
-      referrer: `https://chatgpt.com/chat/${threadId}`,
+      referrer: `https://${DOMAIN_CHATGPT}/chat/${threadId}`,
       method: "GET",
       mode: "cors",
     }
@@ -265,7 +268,7 @@ async function getConversationGChrome(threadId) {
   clog(`[debug] threadId: ${threadId}`);
   clog(`[debug] token: ${token != null}`);
   const response = await fetch(
-    `https://chatgpt.com/backend-api/conversation/${threadId}`,
+    `https://${DOMAIN_CHATGPT}/backend-api/conversation/${threadId}`,
     {
       headers: {
         accept: "*/*",
@@ -274,7 +277,7 @@ async function getConversationGChrome(threadId) {
         "content-type": "application/json",
         pragma: "no-cache",
       },
-      referrer: `https://chatgpt.com/chat/${threadId}`,
+      referrer: `https://${DOMAIN_CHATGPT}/chat/${threadId}`,
       referrerPolicy: "same-origin",
       body: null,
       method: "GET",
