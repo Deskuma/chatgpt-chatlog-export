@@ -1,4 +1,11 @@
+# developper files
 __*
 NOTE.*
 DEVELOP.*
+
+# firefox package
 *.zip
+
+# chrome extension package and secret key
+*.crx
+*.pem
