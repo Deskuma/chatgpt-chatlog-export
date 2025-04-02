@@ -10,7 +10,7 @@ OpenAI の ChatGPT 会話ログを JSON 形式でエクスポート（ダウン�
 
 ## 使い方
 
-このコードは、OpenAI のチャットページで使えるブラウザ拡張機能 ( [FireFox ADD-ONS](https://addons.mozilla.org/ja/firefox/addon/chatgpt-chat-log-export/) )です。
+このコードは、OpenAI のチャットページで使えるブラウザ拡張機能 ( [Mozilla FireFox](https://addons.mozilla.org/ja/firefox/addon/chatgpt-chat-log-export/)/[Google chrome](https://chromewebstore.google.com/detail/chatgpt-chat-log-export-j/gejpagcjdocpgpnblmknkfpbdjkeocpd) )です。
 
 チャットページで会話を行っている間、この拡張機能のアイコン <img src="./icons/download-icon.svg" width="24"> をクリックすると、会話を JSON 形式でダウンロードすることができます。
 
